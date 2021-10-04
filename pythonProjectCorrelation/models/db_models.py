@@ -54,9 +54,9 @@ class Exercise(Base):
 
     id = Column(Integer, primary_key=True)
     question_id = Column(Integer, ForeignKey('questions.id'))
-    question = relationship("Question", backref=backref("exercise"))
+    question = relationship("Question", backref=backref("exercises"))
     answer_id = Column(Integer, ForeignKey('answers.id'))
-    answer = relationship("Answer", backref=backref("exercise"))
+    answer = relationship("Answer", backref=backref("exercises"))
     correct_answer = Column(Boolean)
     pages = relationship(
         "Page", secondary=pages_exercises_association, back_populates="exercises"
@@ -109,13 +109,13 @@ class AppSession(Base):
     score = Column(Float)
     state = Column(String)
 
-    def __init__(self, candidate_id: int, assessment_id: int, unique_session_id: str = None):
+    def __init__(self, candidate_id: int, assessment_id: int, unique_session_id: str = None, state: str = 'draft'):
         self.unique_session_id = unique_session_id and unique_session_id or uuid.uuid1().__str__()
         self.candidate_id = candidate_id
         self.assessment_id = assessment_id
         self.score = 0
         self.time = 0
-        self.state = 'draft'
+        self.state = state
 
 
 
@@ -125,6 +125,8 @@ class CandidateResponses(Base):
     id = Column(Integer, primary_key=True)
     exercise_id = Column(Integer, ForeignKey('exercises.id'))
     exercise = relationship("Exercise", backref=backref("responses"))
+    session_id = Column(Integer, ForeignKey('sessions.id'))
+    session = relationship("AppSession", backref=backref("responses"))
     text_response = Column(String)
 
 

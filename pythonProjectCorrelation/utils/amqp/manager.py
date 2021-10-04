@@ -45,23 +45,3 @@ class AMQPManager(metaclass=Singleton):
 
 
 
-# connection = pika.BlockingConnection(
-#     pika.ConnectionParameters(host='localhost'))
-# channel = connection.channel()
-#
-# channel.queue_declare(queue='queue1')
-# channel.queue_declare(queue='queue2')
-# channel.queue_declare(queue='queue3')
-#
-# channel.basic_publish(exchange='', routing_key='queue1',
-#                       body=json.dumps({'uuid':'queue1','message':'Hello World 1'})
-#                       )
-# channel.basic_publish(exchange='', routing_key='queue1',
-#                       body=json.dumps({'uuid':'queue1','message':'Hello World 2'})
-#                       )
-# channel.basic_publish(exchange='', routing_key='queue2',
-#                       body=json.dumps({'uuid':'queue2','message':'Hello World'})
-#                       )
-# print(" [x] Sent 'Hello World!'")
-# connection.close()
-
